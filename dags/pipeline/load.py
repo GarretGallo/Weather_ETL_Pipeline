@@ -40,9 +40,11 @@ def load(**kwargs):
     Base.metadata.create_all(engine)
 
     ti = kwargs['ti']
-    daily = ti.xcom_pull(task_ids='transform', key='daily_avg')
-    monthly = ti.xcom_pull(task_ids='transform', key='monthly_temp')
-    cond_pct = ti.xcom_pull(task_ids='transform', key='conditions_pct')
+    result = ti.xcom_pull(task_ids='transform')
+
+    daily = result['daily_avg']
+    monthly = result['monthly_temp']
+    cond_pct = result['conditions_pct']
 
     df_daily = pd.DataFrame(daily)
     df_monthly = pd.DataFrame(monthly)
