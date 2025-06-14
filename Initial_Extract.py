@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from pymongo.errors import BulkWriteError
 
 #--- Fetch from API ---#
-url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Tokyo/2024-06-13/2025-06-13?unitGroup=us&key=V29UE9AMYM6D62AS4CKTZHGCP&contentType=json"
+url = "INSERT URL HERE"
 response = requests.get(url, timeout=10)
 response.raise_for_status()
 payload = response.json()
