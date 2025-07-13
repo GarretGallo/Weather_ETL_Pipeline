@@ -1,20 +1,30 @@
 import pandas as pd
-from pipeline.aggregation import (get_daily_averages, get_monthly_temperature, get_conditions)
+from pipeline.aggregation import (
+    get_daily_temp, get_weekly_temp, get_monthly_temp,
+    get_daily_wind_and_air, get_solar_daily, get_conditions,
+    get_countrys)
 
-def transform(**kwargs) -> dict:
-    ti  = kwargs['ti']
-    raw = ti.xcom_pull(task_ids='extract')  
-    if not raw:
-        raise ValueError("Transform got no data from extract")
+def transformation(**kwargs):
+    ti = kwargs['ti']
+    parquet_path = ti.xcom_pull(task_ids='extract')
 
+    if not  parquet_path:
+        raise ValueError("Transformation got no data from extract")
     
-    df = pd.DataFrame(raw)
+    df = pd.read_parquet(parquet_path)
+
+    print("TRANSFORM DEBUG: columns =", df.columns.tolist())
+    print(df.head(3))
+
     df['date'] = pd.to_datetime(df['date'])
     df.set_index('date', inplace=True)
 
-    # perform your aggregations
     return {
-        'daily_avg':      get_daily_averages(df).to_dict(orient='records'),
-        'monthly_temp':   get_monthly_temperature(df).to_dict(orient='records'),
+        'daily_temp_avg': get_daily_temp(df).to_dict(orient='records'),
+        'weekly_temp_avg': get_weekly_temp(df).to_dict(orient='records'),
+        'monthly_temp_avg': get_monthly_temp(df).to_dict(orient='records'),
+        'daily_wind_and_air': get_daily_wind_and_air(df).to_dict(orient='records'),
+        'solar_daily': get_solar_daily(df).to_dict(orient='records'),
         'conditions_pct': get_conditions(df).to_dict(orient='records'),
+        'countries_df': get_countrys(df).to_dict(orient='records')
     }

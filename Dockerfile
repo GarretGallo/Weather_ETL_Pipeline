@@ -1,1 +1,3 @@
 FROM astrocrpublic.azurecr.io/runtime:3.0-4
+RUN pip install pyarrow
+RUN pip install apache-airflow-providers-mongo

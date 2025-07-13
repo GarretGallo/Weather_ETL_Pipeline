@@ -10,7 +10,7 @@ import pandas as pd
 from datetime import timedelta
 
 from pipeline.extract import fetch_and_load
-from pipeline.transform import transform
+from pipeline.transform import transformation
 from pipeline.load import load
 
 default_args = {
@@ -25,12 +25,12 @@ with DAG(
 
     t1 = PythonOperator(
         task_id = 'extract',
-        python_callable = fetch_and_load
+        python_callable = fetch_and_load,
     )
 
     t2 = PythonOperator(
         task_id="transform",
-        python_callable=transform,
+        python_callable=transformation,
     )
 
     t3 = PythonOperator(
