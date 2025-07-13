@@ -106,7 +106,7 @@ class weatherconditions(Base):
     )
 
 def load(**kwargs):
-    hook = PostgresHook(postgres_conn_id="postgres_wwai")
+    hook = PostgresHook(postgres_conn_id="enter db here")
     engine = hook.get_sqlalchemy_engine()
     Base.metadata.create_all(engine)
 
