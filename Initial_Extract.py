@@ -10,7 +10,7 @@ payload = response.json()
 
 #--- Connect to MongoDB ---#
 client = MongoClient(
-    'mongodb+srv://garretgallo06:Mvan6WHgkRFJDWRx@cluster0.srwmbf0.mongodb.net/',
+    'ENTER URL HERE',
     tls = True,
     tlsAllowInvalidCertificates=True)
 db = client['WWAI']
