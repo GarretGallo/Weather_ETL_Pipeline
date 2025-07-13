@@ -13,9 +13,6 @@ def transformation(**kwargs):
     
     df = pd.read_parquet(parquet_path)
 
-    print("TRANSFORM DEBUG: columns =", df.columns.tolist())
-    print(df.head(3))
-
     df['date'] = pd.to_datetime(df['date'])
     df.set_index('date', inplace=True)
 
