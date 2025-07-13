@@ -3,7 +3,7 @@ from pymongo import MongoClient
 
 #--- Connect to MongoDB and Pull Data ---#
 def fetch_and_load(**kwargs):
-    client = MongoClient('mongodb+srv://garretgallo06:GarretMongo@cluster0.srwmbf0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+    client = MongoClient('ENTER URL HERE')
     db = client["WWAI"]
     collection = db["Test.Weather"]
 
@@ -49,10 +49,6 @@ def fetch_and_load(**kwargs):
     
     if not records:
         raise ValueError("No records fetched—check your DB/collection names and projection")
-    
-    cities = { r["city"] for r in records }
-    print(f"🛠️  Extracted {len(records)} records for cities: {cities}")
-
 
     df = pd.DataFrame(records)
     path = f"/tmp/weathers-{kwargs['ds']}.parquet"
